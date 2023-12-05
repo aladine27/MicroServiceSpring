@@ -1,6 +1,22 @@
 version: "2.2"
 services:
 
+  gestionfoyer2:
+    container_name: gestionfoyer2
+    build:
+      context: ./
+      dockerfile: Docker-foyer
+    ports:
+      - "8084:8084"
+    hostname: localhost
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://docker-mysql_2:3306/chatService?autoReconnect=true&useSSL=false
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://serviceregistry:8761/eureka/
+    image: "gestionfoyer"
+    depends_on:
+      - Eureka
+      - docker-mysql_2
+
 
   gestionetudiant:
     container_name: gestionetudiant
