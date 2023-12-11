@@ -27,7 +27,7 @@ services:
       - "8083:8083"
     hostname: localhost
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://docker-mysql_2:3306/chatService?autoReconnect=true&useSSL=false
+      - SPRING_DATASOURCE_URL=jdbc:mysql://docker-mysql_3:3306/chatService?autoReconnect=true&useSSL=false
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://serviceregistry:8761/eureka/
     image: "gestionetudiant"
     depends_on:
@@ -42,6 +42,13 @@ services:
       - MYSQL_DATABASE=chatService
     ports:
       - 3308:3306
+  docker-mysql_3:
+    image: "mysql:5.6"
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=1
+      - MYSQL_DATABASE=chatService2
+    ports:
+      - 3307:3305
 
   gestionbloc:
     container_name: gestionbloc
@@ -57,6 +64,23 @@ services:
     depends_on:
       - Eureka
 
+  cloud-gateway-api:
+      build:
+        context: ./
+        dockerfile: Dockerfilecloud
+      ports:
+        - "8051:8051"
+  keycloak:
+    container_name: keycloak
+    image: jboss/keycloak
+    ports:
+      - "8380:8380"
+    environment:
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+      - DB_VENDOR=h2 # Use H2 database for simplicity, you may want to configure a production database
+    depends_on:
+      - Eureka
   gestionchambre:
     container_name: gestionchambre
     build:
@@ -70,6 +94,18 @@ services:
     image: "gestionchambre"
     depends_on:
       - Eureka
+
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8086:80"
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOSTS=docker-mysql_2:3306,docker-mysql_3:3305
+    depends_on:
+      - docker-mysql_2
+      - docker-mysql_3
   Eureka:
     container_name: serviceregistry
     build:
