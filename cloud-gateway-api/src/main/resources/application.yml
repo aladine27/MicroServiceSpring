@@ -1,0 +1,40 @@
+server:
+  port: 8051
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:4200"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+
+      routes:
+        - id: chambreModule
+          uri: http://localhost:8085/
+          predicates:
+            - Path=/chambre/**
+        - id: etudiantModule
+          uri: http://localhost:8085/
+          predicates:
+            - Path=/etudiant/**
+        - id: blocModule
+          uri: http://localhost:8082/
+          predicates:
+            - Path=/bloc/**
+        - id: foyerModule
+          uri: http://localhost:8084/
+          predicates:
+            - Path=/foyer/**
