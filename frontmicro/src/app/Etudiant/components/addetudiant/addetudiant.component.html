@@ -1,0 +1,32 @@
+<form #etudiantForm="ngForm" (ngSubmit)="addEtudiant()">
+  <div class="container">
+    <div id="formtitle">Add Etudiant</div>
+
+    <div class="formfield" id="firstnamefield">
+      <input type="text" name="prenomEtudiant" id="prenomEtudiant" [(ngModel)]="etudiant.prenomEtm" required>
+      <label for="prenomEtudiant">First Name</label>
+    </div>
+
+    <div class="formfield" id="lastnamefield">
+      <input type="text" name="nomEtudiant" id="nomEtudiant" [(ngModel)]="etudiant.nomet" required>
+      <label for="nomEtudiant">Last Name</label>
+    </div>
+
+    <div class="formfield" id="schoolfield">
+      <input type="text" name="ecole" id="ecole" [(ngModel)]="etudiant.ecole" required>
+      <label for="ecole">School</label>
+    </div>
+
+    <div class="formfield" id="cinfield">
+      <input type="number" name="cin" id="cin" [(ngModel)]="etudiant.cin" required>
+      <label for="cin">CIN</label>
+    </div>
+
+    <div class="formfield" id="birthdatefield">
+      <input type="date" name="dateNaissance" id="dateNaissance" [(ngModel)]="etudiant.dateNaissance" required>
+      <label for="dateNaissance">Date of Birth</label>
+    </div>
+
+    <button type="button" (click)="addEtudiant()">Save</button>
+  </div>
+</form>

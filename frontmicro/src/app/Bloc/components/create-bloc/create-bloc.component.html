@@ -1,0 +1,25 @@
+<form #blocForm="ngForm" (ngSubmit)="addBloc()">
+  <div class="dark-mode bg-dark text-white container">
+    <div id="formtitle">Add Bloc</div>
+
+    <div class="formfield" id="nomBlocField">
+      <label for="nomBloc">Nom Bloc</label>
+      <input class="dark-mode bg-dark text-white" type="text" name="nomBloc" id="nomBloc" [(ngModel)]="bloc.nomBloc" required>
+      <div *ngIf="blocForm.controls['nomBloc'].hasError('required') && (blocForm.controls['nomBloc'].dirty || blocForm.controls['nomBloc'].touched)" class="error-message">
+        Nom Bloc is required
+      </div>
+    </div>
+
+    <div class="formfield" id="capacityBlocField">
+      <label for="capacityBloc">Capacity Bloc</label>
+      <input class="dark-mode bg-dark text-white" type="number" name="capacityBloc" id="capacityBloc" [(ngModel)]="bloc.capacityBloc" required>
+      <div *ngIf="blocForm.controls['capacityBloc'].hasError('required') && (blocForm.controls['capacityBloc'].dirty || blocForm.controls['capacityBloc'].touched)" class="error-message">
+        Capacity Bloc is required
+      </div>
+    </div>
+
+    <!-- Add more fields as needed for the Bloc model -->
+
+    <button type="submit" *ngIf="blocForm.valid">Save</button>
+  </div>
+</form>
